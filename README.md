@@ -23,26 +23,24 @@ Ejecuta el script con:
 
 Palacios Meza Briyid Estrella - Tecnologías Emergentes - ISO46B
 
-## Flujo de datos (Semana 2)
+## Flujo de datos — Semana 2
 
-Este proyecto consume la API pública **Open-Meteo** para obtener el pronóstico del clima de Huancayo (7 días).
+Esta sección documenta el pipeline de datos construido en la Semana 2 (Librerías para Datos y Automatización).
 
-### Fuente
-- **API:** Open-Meteo (https://api.open-meteo.com/v1/forecast)
-- **Datos:** Temperatura máxima, temperatura mínima y precipitación diaria.
+*Fuente:* API pública Open-Meteo (https://api.open-meteo.com/v1/forecast), sin necesidad de clave de acceso. Se consulta el pronóstico de 7 días para Huancayo (latitud -12.07, longitud -75.21): temperatura máxima, temperatura mínima y precipitación diaria.
 
-### Transformación
-1. Se consume la API con `requests` y se guarda la respuesta cruda en `pronostico_huancayo.json`.
-2. Se convierte el JSON a CSV con el módulo `csv` → `pronostico_huancayo.csv`.
-3. Se carga el CSV con Pandas, se agregan columnas derivadas (amplitud térmica, día lluvioso, categoría) y se generan resúmenes por categoría.
+*Transformación:*
+1. clima.py consume la API con requests (timeout de 5s y manejo de excepciones) y guarda la respuesta cruda en pronostico_huancayo.json.
+2. La misma respuesta se convierte a pronostico_huancayo.csv con el módulo estándar csv.
+3. analisis.py carga el CSV en un DataFrame de Pandas, agrega las columnas derivadas amplitud_termica, dia_lluvioso y categoria (frío/templado/cálido), y calcula un resumen agrupado por categoría con groupby.
 
-### Salida
-- `pronostico_huancayo.json` → Datos crudos de la API.
-- `pronostico_huancayo.csv` → Datos tabulados.
-- `pronostico_huancayo_procesado.csv` → Datos con columnas derivadas.
-- `resumen_por_categoria.csv` → Resumen agrupado por categoría de temperatura.
+*Salida:*
+- pronostico_huancayo.json — respuesta cruda de la API (trazabilidad del dato original).
+- pronostico_huancayo.csv — datos tabulares sin procesar.
+- pronostico_huancayo_procesado.csv — datos con las columnas derivadas.
+- resumen_por_categoria.csv — agregación por categoría de temperatura.
 
-### Archivos del pipeline
-- `numpy_demo.py` → Fundamentos de NumPy.
-- `clima.py` → Consumo de API y conversión a CSV.
-- `analisis.py` → Análisis con Pandas.
+*Cómo reproducirlo:*
+bash
+python clima.py
+python analisis.py
