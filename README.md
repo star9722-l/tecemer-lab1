@@ -56,3 +56,29 @@ python organizador.py <carpeta> [--dry-run]
 Pruebas: test_organizador.py cubre clasificacion, movimiento real y modo
 simulacion, usando la fixture tmp_path de pytest para no afectar el
 sistema de archivos real. Ejecutar con: pytest -v
+
+# Semana 04 — Redes Neuronales Artificiales
+
+Laboratorio 4 - Tecnologías Emergentes (ISO46B)
+
+## Descripción
+
+Clasificador de lluvia con un perceptrón multicapa (MLP) construido con Keras sobre TensorFlow, entrenado con el dataset climático de Huancayo generado en la Semana 2.
+
+## Archivos
+
+- `preparar_dataset.py` — Prepara el dataset (limpieza, escalado, partición train/test).
+- `perceptron_sintetico.py` — MLP sobre datos sintéticos (primera aproximación).
+- `clasificador_lluvia.py` — MLP sobre datos reales + baseline con regresión logística.
+- `predecir.py` — Inferencia con el modelo guardado.
+- `tests/test_preparacion.py` — Pruebas unitarias con pytest.
+
+## Requisitos
+
+- Python 3.12
+- TensorFlow, scikit-learn, matplotlib, pandas, numpy
+
+## Instalación
+
+```bash
+pip install tensorflow scikit-learn matplotlib pandas numpy
